@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>AEGIS GROUPS | Creative Growth Studio</title>
+</head>
+<body>
+    <style>
+        /* Base Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+            img {
+                max-width: 100%;
+            }
+
+            .grid {
+                min-width: 0;
+            }
+
+            .grid > *,
+            .showcase-box > *,
+            .contact-panel-inner > * {
+                min-width: 0;
+            }
+
+
+        :root {
+            --ink: #101827;
+            --navy: #102c4f;
+            --blue: #2f80ed;
+            --mint: #c5f2df;
+            --teal: #25b894;
+            --coral: #ff6f61;
+            --paper: #ffffff;
+            --ash: #eef1f4;
+            --muted: #697586;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--ink);
+            background-color: var(--paper);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            line-height: 1.2;
+        }
+
+        /* Navigation */
+        header {
+            z-index: 10;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(rgba(16, 44, 79, 0.72), transparent);
+            color: white;
+            padding: 18px 20px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 28px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.25s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--mint);
+        }
+
+        a:focus-visible,
+        button:focus-visible {
+            outline: 3px solid var(--mint);
+            outline-offset: 3px;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 590px;
+            background: linear-gradient(90deg, rgba(16, 44, 79, 0.95), rgba(16, 44, 79, 0.38)), url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=2000&q=85') no-repeat center center/cover;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            text-align: left;
+            padding: 80px max(20px, calc((100% - 1100px) / 2));
+            overflow: hidden;
+        }
+
+        .hero::after {
+            position: absolute;
+            right: 7%;
+            bottom: -120px;
+            width: 280px;
+            height: 280px;
+            border: 1px solid rgba(197, 242, 223, 0.65);
+            border-radius: 50%;
+            content: '';
+        }
+
+        .hero h2 {
+            max-width: 760px;
+            color: var(--mint);
+            font-size: clamp(3.2rem, 8vw, 7rem);
+            letter-spacing: -3px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            max-width: 540px;
+            color: #ffffff;
+            font-size: clamp(1rem, 2vw, 1.25rem);
+        }
+
+        .showcase {
+            max-width: 1100px;
+            margin: 72px auto;
+            padding: 0 20px;
+        }
+
+        .showcase-box {
+            display: grid;
+            grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+            background: white;
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: 14px 14px 0 var(--mint);
+        }
+
+        .slideshow {
+            position: relative;
+            min-height: 320px;
+            background: var(--navy);
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            min-height: 320px;
+            object-fit: cover;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .slide-control {
+            position: absolute;
+            top: 50%;
+            display: grid;
+            width: 38px;
+            height: 38px;
+            place-items: center;
+            border: 0;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.55);
+            color: white;
+            font-size: 1.25rem;
+            cursor: pointer;
+            transform: translateY(-50%);
+        }
+
+        .slide-control:hover {
+            background: var(--coral);
+        }
+
+        .slide-control.previous {
+            left: 16px;
+        }
+
+        .slide-control.next {
+            right: 16px;
+        }
+
+        .slide-dots {
+            position: absolute;
+            bottom: 16px;
+            left: 50%;
+            display: flex;
+            gap: 8px;
+            transform: translateX(-50%);
+        }
+
+        .slide-dot {
+            width: 9px;
+            height: 9px;
+            padding: 0;
+            border: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+        }
+
+        .slide-dot.active {
+            background: var(--coral);
+        }
+
+        .showcase-copy {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 48px;
+        }
+
+        .showcase-copy h3 {
+            margin-bottom: 14px;
+            color: var(--navy);
+            font-size: 2.15rem;
+        }
+
+        .showcase-copy p {
+            color: var(--muted);
+        }
+
+        .section-heading {
+            max-width: 650px;
+            margin-bottom: 24px;
+        }
+
+        .section-heading span {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--coral);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .section-heading h3 {
+            margin-bottom: 10px;
+            color: var(--navy);
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+        }
+
+        .section-heading p {
+            color: var(--muted);
+        }
+
+        .service-card {
+            position: relative;
+            min-height: 210px;
+            padding: 28px;
+            border-top: 4px solid var(--teal);
+            border-radius: 0;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 10px 10px 0 var(--mint);
+        }
+
+        .service-number {
+            display: inline-block;
+            margin-bottom: 18px;
+            color: var(--coral);
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .service-card h4 {
+            margin-bottom: 10px;
+            color: var(--navy);
+            font-size: 1.25rem;
+        }
+
+        .service-card p {
+            color: var(--muted);
+        }
+
+        .stats-strip {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            margin-top: 32px;
+            background: #d9dee5;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .stat {
+            padding: 24px;
+            background: var(--navy);
+            color: white;
+            text-align: center;
+        }
+
+        .stat:first-child {
+            border-radius: 999px 0 0 999px;
+        }
+
+        .stat:last-child {
+            border-radius: 0 999px 999px 0;
+        }
+
+        .stat strong {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--mint);
+            font-size: 2rem;
+        }
+
+        .stat span {
+            font-size: 0.9rem;
+        }
+
+        .process-section {
+            padding: 40px 20px;
+            background: var(--ash);
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .process-step {
+            padding: 24px 0;
+            border-top: 2px solid var(--coral);
+        }
+
+        .process-step strong {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--navy);
+            font-size: 1.1rem;
+        }
+
+        .process-step p {
+            color: var(--muted);
+        }
+
+        .resources-section {
+            padding: 72px 20px;
+            background: var(--paper);
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .resource-card {
+            display: flex;
+            min-height: 230px;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding: 24px;
+            border: 1px solid #d9dee5;
+            background: white;
+            color: var(--ink);
+            text-decoration: none;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .resource-card:hover {
+            border-color: var(--teal);
+            box-shadow: 8px 8px 0 var(--mint);
+            transform: translateY(-5px);
+        }
+
+        .resource-card i {
+            display: grid;
+            width: 42px;
+            height: 42px;
+            margin-bottom: 28px;
+            place-items: center;
+            background: var(--ash);
+            color: var(--navy);
+            font-size: 1.1rem;
+        }
+
+        .resource-card h4 {
+            margin-bottom: 8px;
+            color: var(--navy);
+            font-size: 1.15rem;
+        }
+
+        .resource-card p {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .resource-card span {
+            margin-top: 20px;
+            color: var(--coral);
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        .contact-panel {
+            max-width: 1100px;
+            margin: 72px auto;
+            padding: 0 20px;
+        }
+
+        .contact-panel-inner {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+            gap: 24px;
+            padding: 56px;
+            background: var(--navy);
+            color: white;
+            box-shadow: 14px 14px 0 var(--mint);
+        }
+
+        .contact-panel h3 {
+            margin-bottom: 8px;
+            color: white;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+        }
+
+        .contact-panel .section-heading span {
+            color: var(--mint);
+        }
+
+        .contact-panel p {
+            max-width: 600px;
+            color: rgba(255, 255, 255, 0.76);
+        }
+
+        .contact-details {
+            align-self: center;
+            padding: 28px;
+            background: white;
+            color: var(--ink);
+        }
+
+        .contact-details h4 {
+            margin-bottom: 14px;
+            color: var(--navy);
+            font-size: 1.15rem;
+        }
+
+        .contact-details a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            color: var(--navy);
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            overflow-wrap: anywhere;
+        }
+
+        .contact-details a:hover {
+            color: var(--coral);
+        }
+
+        .contact-details a i {
+            display: grid;
+            width: 32px;
+            height: 32px;
+            flex: 0 0 32px;
+            place-items: center;
+            background: var(--ash);
+            color: var(--navy);
+            font-size: 0.85rem;
+        }
+
+        .availability {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 22px;
+            color: var(--mint);
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .availability::before {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--teal);
+            box-shadow: 0 0 0 5px rgba(37, 184, 148, 0.18);
+            content: '';
+        }
+
+        .contact-note {
+            margin-top: 18px;
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
+
+        .social-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 18px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-width: 70px;
+            min-height: 38px;
+            margin: 0;
+            padding: 7px 12px;
+            border: 1px solid #d9dee5;
+            background: white;
+            font-size: 0.8rem;
+            transition: border-color 0.25s ease, background 0.25s ease;
+        }
+
+        .social-links a:hover {
+            border-color: var(--teal);
+            background: var(--mint);
+            color: var(--navy);
+        }
+
+        .social-links i {
+            font-size: 1rem;
+        }
+
+        .footer-social {
+            justify-content: center;
+            margin: 16px 0 0;
+        }
+
+        .footer-social a {
+            width: 40px;
+            min-width: 40px;
+            height: 40px;
+            min-height: 40px;
+            padding: 0;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 50%;
+            background: transparent;
+            color: white;
+        }
+
+        .footer-social a:hover {
+            border-color: var(--mint);
+            background: var(--mint);
+            color: var(--navy);
+        }
+
+        .contact-panel .cta-btn {
+            flex-shrink: 0;
+            margin-top: 0;
+            background: var(--navy);
+        }
+
+        .contact-panel .cta-btn:hover {
+            background: #214b7d;
+        }
+
+        @media (max-width: 700px) {
+            header {
+                padding: 16px;
+            }
+
+            nav {
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: flex-end;
+                gap: 4px 16px;
+            }
+
+            nav ul li {
+                margin-left: 0;
+            }
+
+            nav ul li a {
+                font-size: 0.8rem;
+            }
+
+            .hero {
+                min-height: 540px;
+                padding: 64px 20px;
+            }
+
+            .hero h2 {
+                max-width: 100%;
+                font-size: clamp(2.7rem, 15vw, 4.2rem);
+                letter-spacing: -1px;
+            }
+
+            .showcase {
+                margin: 48px auto;
+                padding: 0 16px;
+            }
+
+            .showcase-box {
+                grid-template-columns: 1fr;
+                box-shadow: 8px 8px 0 var(--mint);
+            }
+
+            .showcase-copy {
+                padding: 32px 24px;
+            }
+
+            .slide,
+            .slideshow {
+                min-height: 250px;
+            }
+
+            .slide-control {
+                width: 44px;
+                height: 44px;
+            }
+
+            .container {
+                margin: 64px auto;
+                padding: 0 16px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-strip,
+            .process-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .resources-section {
+                padding: 56px 16px;
+            }
+
+            .resource-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .stats-strip {
+                border-radius: 28px;
+            }
+
+            .stat:first-child,
+            .stat:last-child {
+                border-radius: 0;
+            }
+
+            .stat:first-child {
+                border-radius: 28px 28px 0 0;
+            }
+
+            .stat:last-child {
+                border-radius: 0 0 28px 28px;
+            }
+
+            .contact-panel-inner {
+                grid-template-columns: 1fr;
+                padding: 32px 24px;
+                box-shadow: 8px 8px 0 var(--mint);
+            }
+
+            .contact-panel {
+                margin: 48px auto;
+                padding: 0 16px;
+            }
+            .contact-details {
+                padding: 22px;
+            }
+
+            footer {
+                margin-top: 48px;
+                padding: 48px 20px 28px;
+            }
+
+            .footer-main {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 32px 20px;
+            }
+
+            .footer-brand {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (max-width: 420px) {
+            nav {
+                display: block;
+            }
+
+            nav ul {
+                justify-content: flex-start;
+                margin-top: 8px;
+            }
+
+            .hero {
+                min-height: 600px;
+                padding-top: 116px;
+            }
+
+            .hero h2 {
+                font-size: 2.65rem;
+            }
+
+            .showcase-copy,
+            .contact-panel-inner {
+                padding: 28px 20px;
+            }
+
+            .showcase-copy h3,
+            .contact-panel h3 {
+                font-size: 1.65rem;
+            }
+
+            .social-links a {
+                min-height: 44px;
+            }
+
+            .footer-main {
+                grid-template-columns: 1fr;
+            }
+
+            .resource-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .cta-btn {
+            display: inline-block;
+            align-self: flex-start;
+            background-color: var(--coral);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 0;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 15px;
+            font-weight: 700;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            background-color: var(--teal);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content Block */
+        .container {
+            max-width: 1100px;
+            margin: 88px auto;
+            padding: 0 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 0;
+            box-shadow: 0 4px 18px rgba(16, 44, 79, 0.08);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--navy);
+            color: white;
+            margin-top: 72px;
+            padding: 64px max(20px, calc((100% - 1100px) / 2));
+        }
+
+        .footer-main {
+            display: grid;
+            grid-template-columns: minmax(220px, 1.4fr) repeat(3, minmax(120px, 1fr));
+            gap: 40px;
+            padding-bottom: 52px;
+        }
+
+        .footer-brand h3 {
+            margin-bottom: 14px;
+            color: var(--mint);
+            font-size: 1.8rem;
+        }
+
+        .footer-brand p {
+            max-width: 280px;
+            color: rgba(255, 255, 255, 0.72);
+            font-size: 0.95rem;
+        }
+
+        .footer-column h4 {
+            margin-bottom: 16px;
+            color: var(--mint);
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .footer-column a {
+            display: block;
+            width: fit-content;
+            margin-bottom: 9px;
+            color: rgba(255, 255, 255, 0.76);
+            font-size: 0.92rem;
+            text-decoration: none;
+            transition: color 0.25s ease, transform 0.25s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--mint);
+            transform: translateX(3px);
+        }
+
+        .footer-bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.18);
+            color: rgba(255, 255, 255, 0.62);
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        .footer-bottom .footer-social {
+            margin: 0;
+        }
+
+        .footer-legal {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .footer-legal a {
+            color: rgba(255, 255, 255, 0.62);
+            text-decoration: none;
+        }
+
+        .footer-legal a:hover {
+            color: var(--mint);
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                margin: 64px auto;
+                padding: 0 16px;
+            }
+
+            .grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+        @media (max-width: 420px) {
+            .container {
+                margin: 56px auto;
+                padding: 0 16px;
+            }
+
+            .hero p,
+            .showcase-copy p,
+            .section-heading p,
+            .service-card p,
+            .process-step p,
+            .resource-card p,
+            .contact-panel p,
+            .footer-brand p {
+                overflow-wrap: anywhere;
+            }
+        }
+    </style>
+    <!-- Hero Showcase -->
+    <section class="hero" id="top">
+        <!-- Header Navigation -->
+        <header>
+            <nav aria-label="Primary navigation">
+                <ul>
+                    <li><a href="#top">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#resources">Resources</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+        <h2>AEGIS GROUPS</h2>
+        <p>We build bold brands, memorable campaigns, and digital experiences that move your business forward.</p>
+        <a href="#services" class="cta-btn">Build Your Brand</a>
+    </section>
+
+    <section class="showcase" aria-label="Featured work">
+        <div class="showcase-box">
+            <div class="slideshow">
+                <img class="slide active" src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=85" alt="Bright modern office interior">
+                <img class="slide" src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1200&q=85" alt="Collaborative workspace with tables and chairs" loading="lazy">
+                <img class="slide" src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=85" alt="Minimal workspace with natural light" loading="lazy">
+                <button class="slide-control previous" type="button" aria-label="Previous slide">&#8249;</button>
+                <button class="slide-control next" type="button" aria-label="Next slide">&#8250;</button>
+                <div class="slide-dots" aria-label="Choose a slide">
+                    <button class="slide-dot active" type="button" aria-label="Show slide 1"></button>
+                    <button class="slide-dot" type="button" aria-label="Show slide 2"></button>
+                    <button class="slide-dot" type="button" aria-label="Show slide 3"></button>
+                </div>
+            </div>
+            <div class="showcase-copy">
+                <h3>Make your next idea impossible to ignore.</h3>
+                <p>From the first sketch to the final post, we turn your vision into a clear, consistent brand people remember.</p>
+                <a href="#services" class="cta-btn">Explore Our Services</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <main class="container" id="services">
+        <div class="section-heading">
+            <span>What we do</span>
+            <h3>Everything your brand needs to show up brilliantly.</h3>
+            <p>One creative partner for strategy, visuals, content, and the digital spaces where your audience finds you.</p>
+        </div>
+        <div class="grid">
+            <div class="card service-card">
+                <span class="service-number">01 / BRAND VISIBILITY</span>
+                <h4>Advertising Campaigns</h4>
+                <p>Campaign concepts and creative assets designed to earn attention, create desire, and turn interest into action.</p>
+            </div>
+            <div class="card service-card">
+                <span class="service-number">02 / DAILY CONNECTION</span>
+                <h4>Social Media Management</h4>
+                <p>Purposeful content, polished visuals, and a consistent voice that keeps your community engaged and growing.</p>
+            </div>
+            <div class="card service-card">
+                <span class="service-number">03 / VISUAL IDENTITY</span>
+                <h4>Graphic Design</h4>
+                <p>Distinctive logos, launch materials, presentations, and brand systems that make every touchpoint feel like you.</p>
+            </div>
+            <div class="card service-card">
+                <span class="service-number">04 / DIGITAL PRESENCE</span>
+                <h4>Website Design</h4>
+                <p>Fast, responsive websites that look sharp, tell your story clearly, and guide visitors toward the next step.</p>
+            </div>
+            <div class="card service-card">
+                <span class="service-number">05 / SMARTER DECISIONS</span>
+                <h4>Data Analysis</h4>
+                <p>Clear reports and practical insights that reveal what is working, where opportunities are hiding, and how to grow with confidence.</p>
+            </div>
+            <div class="card service-card">
+                <span class="service-number">06 / SEARCH GROWTH</span>
+                <h4>SEO &amp; Content Strategy</h4>
+                <p>Search-friendly content and a focused strategy that helps the right people discover your brand at the right moment.</p>
+            </div>
+        </div>
+        <div class="stats-strip" aria-label="AEGIS GROUPS highlights">
+            <div class="stat"><strong>360°</strong><span>Creative support</span></div>
+            <div class="stat"><strong>1 team</strong><span>For your whole brand</span></div>
+            <div class="stat"><strong>100%</strong><span>Made for your goals</span></div>
+        </div>
+    </main>
+
+    <section class="process-section" id="about">
+        <div class="container">
+            <div class="section-heading">
+                <span>Our approach</span>
+                <h3>Clear thinking. Creative execution. Real momentum.</h3>
+            </div>
+            <div class="process-grid">
+                <div class="process-step">
+                    <strong>01. Discover</strong>
+                    <p>We learn what makes your business different, who you want to reach, and what success should look like.</p>
+                </div>
+                <div class="process-step">
+                    <strong>02. Create</strong>
+                    <p>We shape the strategy, design the visuals, and build the content your audience will want to remember.</p>
+                </div>
+                <div class="process-step">
+                    <strong>03. Launch</strong>
+                    <p>We help you show up consistently, measure what matters, and keep improving the work over time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="resources-section" id="resources">
+        <div class="container">
+            <div class="section-heading">
+                <span>Resources</span>
+                <h3>Useful ideas for your next move.</h3>
+                <p>Practical starting points to help you sharpen your message, strengthen your presence, and make better creative decisions.</p>
+            </div>
+            <div class="resource-grid">
+                <a class="resource-card" href="#services">
+                    <div>
+                        <i class="fa-solid fa-bullseye" aria-hidden="true"></i>
+                        <h4>Campaign Starter</h4>
+                        <p>Build a clearer campaign brief with the right audience, message, offer, and next step.</p>
+                    </div>
+                    <span>Explore services &rarr;</span>
+                </a>
+                <a class="resource-card" href="#about">
+                    <div>
+                        <i class="fa-solid fa-lightbulb" aria-hidden="true"></i>
+                        <h4>Brand Clarity Guide</h4>
+                        <p>Find the words, visuals, and point of view that make your brand easier to remember.</p>
+                    </div>
+                    <span>See our approach &rarr;</span>
+                </a>
+                <a class="resource-card" href="#services">
+                    <div>
+                        <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
+                        <h4>Growth Signals</h4>
+                        <p>Know which audience and performance signals are worth watching before you make a decision.</p>
+                    </div>
+                    <span>Find the right support &rarr;</span>
+                </a>
+                <a class="resource-card" href="#contact">
+                    <div>
+                        <i class="fa-solid fa-comments" aria-hidden="true"></i>
+                        <h4>Project Brief</h4>
+                        <p>Bring us your goals, questions, and rough ideas. We will help turn them into a focused plan.</p>
+                    </div>
+                    <span>Start a conversation &rarr;</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-panel" id="contact">
+        <div class="contact-panel-inner">
+            <div>
+                <span class="availability">Available for new projects</span>
+                <div class="section-heading">
+                    <span>Let's work together</span>
+                    <h3>Let's make your next move count.</h3>
+                </div>
+                <p>Tell us what you are building, and we'll shape the strategy, creative direction, and digital experience to help it stand out.</p>
+                <a href="mailto:hello@aegisgroups.com" class="cta-btn">Start a Conversation</a>
+            </div>
+            <div class="contact-details">
+                <h4>Let's talk about your project</h4>
+                <a href="mailto:hello@aegisgroups.com"><i class="fa-solid fa-envelope" aria-hidden="true"></i><span>hello@aegisgroups.com</span></a>
+                <a href="tel:+2348000000000"><i class="fa-solid fa-phone" aria-hidden="true"></i><span>+234 800 000 0000</span></a>
+                <p class="contact-note">We usually reply within one business day.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-main">
+            <div class="footer-brand">
+                <h3>AEGIS GROUPS</h3>
+                <p>Creative strategy, design, and digital experiences for brands ready to be remembered.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Explore</h4>
+                <a href="#top">Home</a>
+                <a href="#about">About us</a>
+                <a href="#services">Services</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-column">
+                <h4>Services</h4>
+                <a href="#services">Advertising</a>
+                <a href="#services">Social media</a>
+                <a href="#services">Graphic design</a>
+                <a href="#services">Website design</a>
+            </div>
+            <div class="footer-column">
+                <h4>Resources</h4>
+                <a href="#resources">Campaign starter</a>
+                <a href="#resources">Brand clarity guide</a>
+                <a href="#resources">Growth signals</a>
+                <a href="#resources">Project brief</a>
+            </div>
+            <div class="footer-column">
+                <h4>Connect</h4>
+                <a href="mailto:hello@aegisgroups.com">hello@aegisgroups.com</a>
+                <a href="tel:+2348000000000">+234 800 000 0000</a>
+                <a href="#contact">Start a project</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="social-links footer-social" aria-label="Social media links">
+                <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="Follow AEGIS GROUPS on X"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Follow AEGIS GROUPS on Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Follow AEGIS GROUPS on Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="Follow AEGIS GROUPS on LinkedIn"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+            </div>
+            <p>&copy; 2026 AEGIS GROUPS. All rights reserved.</p>
+            <div class="footer-legal">
+                <a href="#contact">Privacy</a>
+                <a href="#contact">Terms</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.slide-dot');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            currentSlide = (index + slides.length) % slides.length;
+            slides.forEach((slide, slideIndex) => {
+                slide.classList.toggle('active', slideIndex === currentSlide);
+                dots[slideIndex].classList.toggle('active', slideIndex === currentSlide);
+            });
+        }
+
+        document.querySelector('.slide-control.previous').addEventListener('click', () => showSlide(currentSlide - 1));
+        document.querySelector('.slide-control.next').addEventListener('click', () => showSlide(currentSlide + 1));
+        dots.forEach((dot, dotIndex) => dot.addEventListener('click', () => showSlide(dotIndex)));
+        setInterval(() => showSlide(currentSlide + 1), 5000);
+    </script>
+</body>
+</html>
