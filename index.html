@@ -102,6 +102,10 @@
             color: var(--mint);
         }
 
+        .mobile-breadcrumb {
+            display: none;
+        }
+
         a:focus-visible,
         button:focus-visible {
             outline: 3px solid var(--mint);
@@ -599,6 +603,34 @@
                 padding: 16px;
             }
 
+            nav ul {
+                display: none;
+            }
+
+            .mobile-breadcrumb {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                list-style: none;
+                font-size: 0.9rem;
+                font-weight: 600;
+            }
+
+            .mobile-breadcrumb a {
+                color: white;
+                text-decoration: none;
+            }
+
+            .mobile-breadcrumb li:last-child {
+                color: var(--mint);
+            }
+
+            .mobile-breadcrumb li + li::before {
+                content: "/";
+                margin-right: 10px;
+                color: rgba(255, 255, 255, 0.65);
+            }
+
             nav {
                 align-items: flex-start;
                 gap: 16px;
@@ -928,6 +960,10 @@
                     <li><a href="#resources">Resources</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
+                <ol class="mobile-breadcrumb" aria-label="Breadcrumb">
+                    <li><a href="#top">AEGIS GROUPS</a></li>
+                    <li id="breadcrumb-current" aria-current="page">Home</li>
+                </ol>
             </nav>
         </header>
         <h2>AEGIS PORTFOLIO</h2>
@@ -1157,6 +1193,27 @@
         document.querySelector('.slide-control.next').addEventListener('click', () => showSlide(currentSlide + 1));
         dots.forEach((dot, dotIndex) => dot.addEventListener('click', () => showSlide(dotIndex)));
         setInterval(() => showSlide(currentSlide + 1), 5000);
+
+        const breadcrumbCurrent = document.querySelector('#breadcrumb-current');
+        const breadcrumbSections = [...document.querySelectorAll('#top, #services, #about, #resources, #contact')];
+        const sectionLabels = new Map([
+            ['top', 'Home'],
+            ['services', 'Services'],
+            ['about', 'About'],
+            ['resources', 'Resources'],
+            ['contact', 'Contact']
+        ]);
+
+        function updateBreadcrumb() {
+            const currentSection = breadcrumbSections
+                .filter(section => section.getBoundingClientRect().top <= window.innerHeight * 0.35)
+                .at(-1) || breadcrumbSections[0];
+            breadcrumbCurrent.textContent = sectionLabels.get(currentSection.id);
+        }
+
+        window.addEventListener('scroll', updateBreadcrumb, { passive: true });
+        window.addEventListener('resize', updateBreadcrumb);
+        updateBreadcrumb();
     </script>
 </body>
 </html>
